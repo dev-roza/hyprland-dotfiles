@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Check which waybar theme is set
+THEMEIS=$(readlink -f ~/.config/waybar/style.css | cut -d '-' -f2)
+
+#if the theme is not dark then we need to switch to it
+if [ $THEMEIS != "dark.css" ]; then
+    SWITCHTO="-dark"
+    ln -sf ~/.config/waybar/style/style-dark.css ~/.config/waybar/style.css
+else
+    SWITCHTO="-light"
+    ln -sf ~/.config/waybar/style/style.css ~/.config/waybar/style.css
+fi
+
+if [ $SWITCHTO == "-dark" ];then
+	#set the GTK theme
+	swww img ~/.config/hypr/wallpaper-dark.jpg
+	
+	gsettings set org.gnome.desktop.interface gtk-theme "Catppuccin-Mocha-Standard-Mauve-Dark"
+	gsettings set org.gnome.desktop.interface icon-theme "Tela-purple-dark"
+	gsettings set org.gnome.desktop.interface cursor-theme "Catppuccin-Mocha-Dark"
+	cp ~/.config/VSCodium/User/settings-dark.json ~/.config/VSCodium/User/settings.json 
+	cp ~/.config/alacritty/alacritty-dark.yml ~/.config/alacritty/alacritty.yml 
+	cp ~/.config/micro/settings-dark.json ~/.config/micro/settings.json
+	#change the background image and be cool about it ;)
+	ln -sf /usr/share/sddm/themes/sdt/Backgrounds/wallpaper-dark.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
+	#cp ~/.config/fish/fish_variables-dark ~/.config/fish/fish_variables
+	cp ~/.config/rofi/catppuccin-dark.rasi ~/.config/rofi/catppuccin.rasi
+	cp ~/.config/rofi/config-dark.rasi ~/.config/rofi/config.rasi
+	
+fi
+if [ $SWITCHTO == "-light" ];then
+	#set the GTK theme
+	swww img ~/.config/hypr/latte.jpg
+	
+	gsettings set org.gnome.desktop.interface gtk-theme "Catppuccin-Latte-Standard-Green-Light"
+	gsettings set org.gnome.desktop.interface icon-theme "Tela-green"
+	gsettings set org.gnome.desktop.interface cursor-theme "Catppuccin-Latte-Light"
+	cp ~/.config/VSCodium/User/settings-light.json ~/.config/VSCodium/User/settings.json
+	cp ~/.config/alacritty/alacritty-light.yml ~/.config/alacritty/alacritty.yml
+	cp ~/.config/micro/settings-light.json ~/.config/micro/settings.json 
+	#change the background image and be cool about it ;)
+	ln -sf /usr/share/sddm/themes/sdt/Backgrounds/wallpaper.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
+	#cp ~/.config/fish/fish_variables-light ~/.config/fish/fish_variables
+	cp ~/.config/rofi/catppuccin-light.rasi ~/.config/rofi/catppuccin.rasi
+	cp ~/.config/rofi/config-light.rasi ~/.config/rofi/config.rasi
+	
+fi
+#restart the waybar
+killall -SIGUSR2 waybar

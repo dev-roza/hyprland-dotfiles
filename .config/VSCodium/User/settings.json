@@ -1,0 +1,6 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "window.menuBarVisibility": "toggle",
+    "cmake.configureOnOpen": false
+}
